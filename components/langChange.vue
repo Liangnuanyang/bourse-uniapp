@@ -39,30 +39,30 @@
 						name: 'English',
 						value: 'en-US'
 					},
-					{
-						name: '日本語',
-						value: 'ja-JP'
-					},
-					{
-						name: 'ภาษาไทย',
-						value: 'th-TH'
-					},
-					{
-						name: 'Tiếng Việt',
-						value: 'vi-VN'
-					}, {
-						name: 'IndonesiaName',
-						value: 'id-ID'
-					}, {
-						name: '한국어',
-						value: 'ko-KR'
-					}, {
-						name: 'Français',
-						value: 'fr-FR'
-					}, {
-						name: 'Deutsch',
-						value: 'de-DE'
-					}
+					// {
+					// 	name: '日本語',
+					// 	value: 'ja-JP'
+					// },
+					// {
+					// 	name: 'ภาษาไทย',
+					// 	value: 'th-TH'
+					// },
+					// {
+					// 	name: 'Tiếng Việt',
+					// 	value: 'vi-VN'
+					// }, {
+					// 	name: 'IndonesiaName',
+					// 	value: 'id-ID'
+					// }, {
+					// 	name: '한국어',
+					// 	value: 'ko-KR'
+					// }, {
+					// 	name: 'Français',
+					// 	value: 'fr-FR'
+					// }, {
+					// 	name: 'Deutsch',
+					// 	value: 'de-DE'
+					// }
 				]
 			};
 		},
@@ -73,8 +73,12 @@
 			},
 			seletLang(item) {
 				uni.setStorageSync('i18nLang', item.value)
+				uni.setStorageSync('LangName', item.name)
 				location.reload();
-			}
+			},
+			onClickCancle(){
+				this.$refs.popup.close()
+			},
 		}
 	}
 </script>

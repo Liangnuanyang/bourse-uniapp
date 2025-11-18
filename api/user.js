@@ -35,6 +35,19 @@ export const getUserIndex = function(data = {}) {
 export const up_password = function(data = {}) {
 	return request.post('user/up_password', data)
 }
+// 修改交易密码
 export const up_mpassword = function(data = {}) {
 	return request.post('user/up_mpassword', data)
+}
+//设置交易密码
+export const set_mpassword = function(data = {}) {
+	return request.post('user/set_mpassword', data)
+}
+// 充值配置信息
+export const recharge_config = function(data = {}) {
+	return request.post('user/recharge_config', data)
+}
+// 充值提交申请
+export const recharge_apply = function(data = {}) {
+	return request.post('user/record', data)
 }

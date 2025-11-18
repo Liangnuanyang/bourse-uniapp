@@ -20,20 +20,33 @@
 						<uni-easyinput :adjust-position="false" v-model="formData.account" :placeholder="$t('login.qsrzh')" :inputBorder="true"
 							:styles="styles" primaryColor="#1150c2"  @focus="hideTabbar" @blur="showTabbar" />
 					</uni-forms-item>
-					<uni-forms-item :label="$t('login.sjh')">
+					<uni-forms-item :label="$t('login.mm')">
+						<uni-easyinput :adjust-position="false" v-model="formData.passwd"
+							:placeholder="$t('login.qsrmm')" :inputBorder="true" :styles="styles" primaryColor="#1150c2"
+							@focus="hideTabbar" @blur="showTabbar" />
+					</uni-forms-item>
+					<uni-forms-item :label="$t('login.qrmm')">
+						<uni-easyinput :adjust-position="false" v-model="formData.o_passwd"
+							:placeholder="$t('login.qsrqrmm')" :inputBorder="true" :styles="styles"
+							primaryColor="#1150c2" @focus="hideTabbar" @blur="showTabbar" />
+					</uni-forms-item>
+					<!-- <uni-forms-item :label="$t('login.sjh')">
 						<uni-easyinput :adjust-position="false" v-model="formData.phone" :placeholder="$t('login.qsrsjh')" :inputBorder="true"
 							:styles="styles" primaryColor="#1150c2"  @focus="hideTabbar" @blur="showTabbar" />
-					</uni-forms-item>
+					</uni-forms-item> -->
 					<uni-forms-item :label="$t('verify.xm')">
 						<uni-easyinput :adjust-position="false" v-model="formData.real_name" :placeholder="$t('verify.srxm')" :inputBorder="true"
 							:styles="styles" primaryColor="#1150c2"  @focus="hideTabbar" @blur="showTabbar" />
 					</uni-forms-item>
-					<uni-forms-item :label="$t('login.khm')">
+					<!-- <uni-forms-item :label="$t('login.khm')">
 						<uni-easyinput :adjust-position="false" v-model="formData.invitecode" :placeholder="$t('login.qsrkhm')"
 							:inputBorder="true" :styles="styles" primaryColor="#1150c2"  @focus="hideTabbar" @blur="showTabbar" />
-					</uni-forms-item>
-					<view class="tui-submit" :class="[{'tui-cancle':btnDisabled}]" @click="checkInfo">
+					</uni-forms-item> -->
+					<!-- <view class="tui-submit" :class="[{'tui-cancle':btnDisabled}]" @click="checkInfo">
 						{{$t('login.xyb')}}
+					</view> -->
+					<view class="tui-submit" :class="[{'tui-cancle':btnDisabled}]" @click="onRegister">
+						{{$t('login.wczc')}}
 					</view>
 				</uni-forms>
 			</view>
@@ -56,6 +69,9 @@
 	import {
 		userCheckRegister
 	} from "@/api/user.js"
+	import {
+		userRegister
+	} from "@/api/user.js"
 	export default {
 		data() {
 			return {
@@ -65,9 +81,11 @@
 					// real_name: '张三',
 					// invitecode: '41',
 					account: '',
-					phone: '',
+					// phone: '',
 					real_name: '',
-					invitecode: ''
+					passwd: '',
+					o_passwd:''
+					// invitecode: ''
 				},
 				styles: {
 					'borderColor': '#fff'
@@ -119,6 +137,12 @@
 			},
 			checkInfo() {
 				if (this.btnDisabled) return
+				if (this.formData.passwd !== this.formData.o_passwd) {
+					return uni.showToast({
+						title: this.$t('login.mmbyz'),
+						icon: 'none'
+					})
+				}
 				userCheckRegister({
 					...this.formData,
 					checkFree: true
@@ -126,6 +150,37 @@
 					this.$store.commit('setRegister', this.formData)
 					uni.navigateTo({
 						url: "/pages/login/register"
+					})
+				})
+			},
+			onRegister() {
+				if (this.btnDisabled) return
+				if (this.formData.passwd !== this.formData.o_passwd) {
+					return uni.showToast({
+						title: this.$t('login.mmbyz'),
+						icon: 'none'
+					})
+				}
+				if (this.formData.mpasswd !== this.formData.o_mpasswd) {
+					return uni.showToast({
+						title: this.$t('login.jymmbyz'),
+						icon: 'none'
+					})
+				}
+				userRegister({
+					...this.$store.state.registerInfo,
+					...this.formData,
+					checkFree: true
+				}).then(_ => {
+					uni.showModal({
+						title: this.$t('login.zccg'),
+						content: this.$t('login.zccgts'),
+						showCancel: false,
+			
+					}).then(_ => {
+						uni.reLaunch({
+							url: "/pages/login/login"
+						})
 					})
 				})
 			},

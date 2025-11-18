@@ -39,11 +39,23 @@
 						"iconPath": require("@/static/tabbar/chanpin.png"),
 						"selectedIconPath": require("@/static/tabbar/chanpin_active.png")
 					},
+					// {
+					// 	"pagePath": "/pages/money/money",
+					// 	"text": this.$t('app.tabbar.yeb'),
+					// 	"iconPath": require("@/static/tabbar/yue.png"),
+					// 	"selectedIconPath": require("@/static/tabbar/yue_active.png")
+					// },
 					{
-						"pagePath": "/pages/money/money",
-						"text": this.$t('app.tabbar.yeb'),
-						"iconPath": require("@/static/tabbar/yue.png"),
-						"selectedIconPath": require("@/static/tabbar/yue_active.png")
+						"pagePath": "/pages/Detail/Detail",
+						"text": this.$t('app.tabbar.jiaoyi'),
+						"iconPath": require("@/static/tabbar/jiaoyi.png"),
+						"selectedIconPath": require("@/static/tabbar/jiaoyi_active.png")
+					},
+					{
+						"pagePath": "/pages/kefu/kefu",
+						"text": this.$t('app.tabbar.kefu'),
+						"iconPath": require("@/static/tabbar/kefu.png"),
+						"selectedIconPath": require("@/static/tabbar/kefu_active.png")
 					},
 					{
 						"pagePath": "/pages/user/user",
@@ -56,6 +68,7 @@
 		},
 		methods: {
 			selectTabBar(path) {
+				console.log('--------',path)
 				uni.switchTab({
 					url:path
 				})

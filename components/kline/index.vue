@@ -9,10 +9,11 @@
 	export default {
 		props: ['data'],
 		data() {
-			return {}
+			return {
+				klineChart: null // 保存图表实例
+			}
 		},
 		mounted() {
-
 			this.$echarts.env.touchEventsSupported = true;
 			this.$echarts.env.wxa = false;
 			this.$echarts.env.canvasSupported = false;
@@ -21,7 +22,14 @@
 		},
 		methods: {
 			init() {
-				const kline = this.$echarts.init(document.getElementById("Kline"));
+				// 如果已有实例，先销毁
+				if (this.klineChart) {
+					this.klineChart.dispose();
+				}
+				
+				const klineDom = document.getElementById("Kline");
+				this.klineChart = this.$echarts.init(klineDom);
+				
 				const upColor = '#00da3c';
 				const downColor = '#ec0000'
 				let data = []
@@ -272,7 +280,7 @@
 										padding: [4, 6, 2, 6],
 										borderRadius: 4,
 										color: '#fff',
-										position: "insideEndTop", //将警示值放在哪个位置，三个值“start”,"middle","end"  开始  中点 结束
+										position: "insideEndTop", //将警示值放在哪个位置，三个值"start","middle","end"  开始  中点 结束
 									},
 									lineStyle: {
 										color: '#75c566',
@@ -359,13 +367,19 @@
 					option.series[0].markLine.data[0].yAxis = data.values[
 						data.values.length - 1
 					][1] + "";
-					kline.setOption(option);
+					this.klineChart.setOption(option);
 				} else {
-					kline.clear();
+					this.klineChart.clear();
 				}
 			},
 		},
-
+		beforeDestroy() {
+			// 组件销毁前清理图表实例
+			if (this.klineChart) {
+				this.klineChart.dispose();
+				this.klineChart = null;
+			}
+		}
 	}
 </script>
 <style lang="scss" scoped>

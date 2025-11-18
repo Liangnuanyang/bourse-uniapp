@@ -1,7 +1,7 @@
 <template>
 	<view>
-		<guo-headerTitle :title="options.title" :isTitleImg="true" :isRight="true" :orderNum="orderCountNum"
-			@onClickTitle="onClickTitle"></guo-headerTitle>
+		<guo-headerTitle :isLeft="false" :title="options.title" :isTitleImg="true" :isRight="true"
+			:orderNum="orderCountNum" @onClickTitle="onClickTitle"></guo-headerTitle>
 		<view class="tui-header">
 			<view class="tui-border" v-if="getUserItem.b_is == 1">
 				<text>{{$t('detail.ssz')}}</text>
@@ -275,6 +275,7 @@
 				</view>
 			</scroll-view>
 		</uni-drawer>
+		<tabbar :actIndex="2"></tabbar>
 	</view>
 </template>
 
@@ -297,8 +298,9 @@
 	export default {
 		components: {
 			kline: () => import("@/components/kline/index.vue"),
-		},
+			tabbar: () => import("@/components/tabbar.vue"),
 
+		},
 		data() {
 			return {
 				timer: null,
@@ -310,7 +312,7 @@
 					timeList: []
 				},
 				klineList: [],
-				timeActive: 3,
+				timeActive: 0,
 				timeTabs: [{
 					text: "1m",
 					value: '1min'
@@ -324,14 +326,8 @@
 					text: "1h",
 					value: '1hour'
 				}, {
-					text: "4h",
-					value: '4hour'
-				}, {
 					text: "1d",
 					value: '1day'
-				}, {
-					text: "1w",
-					value: '1week'
 				}],
 				deal: {
 					amountTab: ['100', '500', '1000', '2000', '5000', '10000'],
@@ -377,20 +373,28 @@
 			}
 		},
 		onLoad(options) {
+			console.log('------options------', options)
 			this.getUserIndex()
-			this.options = options;
-			this.$nextTick(() => {
-				this.getDetail();
-			})
-			this.getDetailUserInfo()
-			this.timer = setInterval((_) => {
-				this.getDetail();
-				this.getUserIndex()
-			}, 5000);
-			this.getOrderCountNum()
-			this.orderTimer = setInterval(() => {
-				this.getOrderCountNum()
-			}, 2000)
+
+		},
+		onShow() {
+			console.log('----onShow-----')
+			const id = uni.getStorageSync('kid')
+			const codename = uni.getStorageSync('codename')
+			const title = uni.getStorageSync('title')
+			console.log('======id====', id)
+			console.log('======codename====', codename)
+			console.log('======codename====', title)
+
+			if (id) {
+				this.options = {
+					id: id,
+					codename: codename,
+					title: title
+				}
+			}
+
+			this.getGoods()
 		},
 		onUnload() {
 			// 页面销毁时清除定时器
@@ -405,6 +409,13 @@
 			if (this.timer) {
 				clearInterval(this.timer);
 			}
+			if (this.orderTimer) {
+				clearInterval(this.orderTimer);
+			}
+			uni.removeStorageSync('kid')
+			uni.removeStorageSync('codename')
+			uni.removeStorageSync('title')
+			this.options = {}
 		},
 		methods: {
 			getOrderCountNum() {
@@ -448,7 +459,7 @@
 				goodMicrotrade(paramData).then(_ => {
 					this.$refs.popupSuccess.open()
 					this.$refs.popup.close()
-					
+
 					const audioContext = uni.createInnerAudioContext();
 					audioContext.src = '/static/success.mp3';
 					audioContext.play();
@@ -518,7 +529,9 @@
 				}).then(({
 					data
 				}) => {
+
 					this.klineList = data || [];
+					console.log('----------', this.klineList)
 					this.$nextTick(_ => {
 						this.$refs['kline'].init()
 					})
@@ -531,12 +544,33 @@
 					data
 				}) => {
 					this.goodsList = data
-					this.$refs.showLeft.open();
+					if (this.goodsList.length > 0) {
+						if (!this.options.id) {
+							this.options = {
+								codename: this.goodsList[0].codename,
+								id: this.goodsList[0].id,
+								title: this.goodsList[0].title
+							}
+						}
+
+						this.$nextTick(() => {
+							this.getDetail();
+						})
+						this.getDetailUserInfo()
+						this.timer = setInterval((_) => {
+							this.getDetail();
+							this.getUserIndex()
+						}, 5000);
+						this.getOrderCountNum()
+						this.orderTimer = setInterval(() => {
+							this.getOrderCountNum()
+						}, 2000)
+					}
 				})
 			},
 			onClickTitle() {
-				this.getGoods()
-
+				this.$refs.showLeft.open();
+				// this.getGoods()
 			},
 		},
 	};
@@ -653,7 +687,7 @@
 
 	.tui-bottomPopup {
 
-		padding: 48rpx 0 0;
+		padding: 48rpx 0 100rpx 0;
 		border-radius: 48rpx 48rpx 0 0;
 		background-color: #fff;
 		z-index: 9999;
@@ -783,7 +817,7 @@
 		padding: 30rpx 40rpx;
 		position: fixed;
 		left: 0;
-		bottom: 0;
+		bottom: 100rpx;
 
 		padding-bottom: 42rpx;
 		font-size: 24rpx;
@@ -793,7 +827,7 @@
 		justify-content: space-between;
 
 		.btn {
-			width: 216rpx;
+			width: 40%;
 			border: unset;
 			color: #fff;
 			text-align: center;

@@ -10,7 +10,7 @@
 			<template v-slot:right>
 				<view class="tui-right" @click="$refs['langChange'].open()">
 					<image src="../../static/diqiu.png" mode=""></image>
-					<text>{{$t('app.yymc')}}</text>
+					<text>{{LangName}}</text>
 				</view>
 			</template>
 		</uni-nav-bar>
@@ -80,7 +80,8 @@
 					// account: 'mumu',
 					// passwd: '123456'
 					account: '',
-					passwd: ''
+					passwd: '',
+					LangName: uni.getStorageSync('LangName')
 				},
 				styles: {
 					'borderColor': '#fff'
@@ -89,7 +90,13 @@
 				windowHeight: ''
 			};
 		},
-
+        onShow() {
+        	this.LangName = uni.getStorageSync('LangName')
+			if(!this.LangName){
+				this.LangName = 'English'
+				uni.setStorageSync('LangName', this.LangName)
+			}
+        },
 		onLoad() {
 			uni.getSystemInfo({
 				success: (res) => {
@@ -116,6 +123,7 @@
 					//TODO handle the exception
 					return true
 				}
+			
 				return false
 			}
 		},
@@ -153,6 +161,7 @@
 						token
 					}
 				}) => {
+					console.log('---------登录---')
 					this.$store.commit('setToken', token)
 					userInfo().then(({
 						data

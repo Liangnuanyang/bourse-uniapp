@@ -6,7 +6,7 @@
 			</view>
 			<view class="tui-right" @click="$refs['langChange'].open()">
 				<image src="@/static/diqiu.png" mode=""></image>
-				<text>{{$t('app.yymc')}}</text>
+				<text>{{LangName}}</text>
 			</view>
 		</view>
 		<view class="tui-banner">
@@ -31,14 +31,14 @@
 				{{$t('home.ptld.jj')}}
 			</view>
 			<lightspotImg></lightspotImg>
-			<view class="con-title">
+			<!-- <view class="con-title">
 				<image src="/static/title.png"></image>
 				<text> {{$t('home.xwzx')}} </text>
 				<image src="/static/title.png"></image>
-			</view>
+			</view> -->
 
 			<view class="newList">
-				<view class="newsItem">
+				<!-- <view class="newsItem">
 					<view class="title">
 						北大光华-广期所新能源产业高管研修课程圆满结业
 					</view>
@@ -63,7 +63,7 @@
 							查看详情
 						</view>
 					</view>
-				</view>
+				</view> -->
 			</view>
 			<view class="con-title">
 				<image src="/static/title.png"></image>
@@ -71,7 +71,7 @@
 				<image src="/static/title.png"></image>
 			</view>
 			<view class="policy">
-				{{ policyText }}
+				{{ LangName=='English'? policyTextEn : policyText }}
 			</view>
 			<view class="packUpBtn">
 				<image src="/static/lucky_fold.png"></image>
@@ -215,6 +215,9 @@
 		policyText
 	} from "./data.js";
 	import {
+		policyTextEn
+	} from "./data_english.js";
+	import {
 		getUserIndex
 	} from '@/api/user.js'
 	export default {
@@ -228,6 +231,7 @@
 			return {
 				value: 0,
 				policyText,
+				policyTextEn,
 				isFold: false,
 				current: 0,
 				mode: "dot",
@@ -285,7 +289,8 @@
 					require("@/static/down_3.png"),
 				],
 				count: 0,
-				getUserItem: {}
+				getUserItem: {},
+				LangName: ''
 			};
 		},
 		onUnload() {
@@ -317,6 +322,7 @@
 		},
 		onShow() {
 			this.getUserIndex()
+			this.LangName = uni.getStorageSync('LangName')
 			this.get_count()
 			this.timer = setInterval(() => {
 				goods({
@@ -371,8 +377,11 @@
 				codename,
 				title
 			}) {
-				uni.navigateTo({
-					url: `/pages/Detail/Detail?id=${id}&codename=${codename}&title=${title}`,
+				uni.setStorageSync('kid', id)
+				uni.setStorageSync('codename', codename)
+				uni.setStorageSync('title', title)
+				uni.switchTab({
+					url: `/pages/Detail/Detail`,
 				});
 			},
 			onClickNotice() {
@@ -409,23 +418,31 @@
 						});
 						break;
 					case 6:
-						getUserIndex({
-							hideLoading: true,
-						}).then(({
-							data
-						}) => {
-							window.location.href = data.kefu_url
-						});
+						// getUserIndex({
+						// 	hideLoading: true,
+						// }).then(({
+						// 	data
+						// }) => {
+						// 	window.location.href = data.kefu_url
+						// });
+						//
+						// break;
+						uni.switchTab({
+							url: '/pages/kefu/kefu'
+						})
 						break;
 					case 0:
-						getUserIndex({
-							hideLoading: true,
-						}).then(({
-							data
-						}) => {
+						uni.navigateTo({
+							url: '/pages/recharge/recharge'
+						})
+						// getUserIndex({
+						// 	hideLoading: true,
+						// }).then(({
+						// 	data
+						// }) => {
 
-							window.location.href = data.kefu_url
-						});
+						// 	window.location.href = data.kefu_url
+						// });
 						break;
 				}
 			},
@@ -724,7 +741,6 @@
 
 			.item {
 				width: 160rpx;
-				height: 160rpx;
 				padding: 30rpx;
 				border-radius: 26rpx;
 				font-size: 32rpx;
@@ -733,6 +749,7 @@
 				box-sizing: border-box;
 				display: flex;
 				align-items: center;
+				text-align: center;
 				justify-content: center;
 				flex-direction: column;
 				position: relative;
@@ -1054,7 +1071,9 @@
 		background-size: 860rpx 1026rpx;
 		background-position-y: -106rpx;
 	}
+
 	.uni-scroll-view::-webkit-scrollbar {
-	    display: none; /* 隐藏滚动条 */
+		display: none;
+		/* 隐藏滚动条 */
 	}
 </style>

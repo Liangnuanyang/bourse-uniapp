@@ -33,16 +33,17 @@
 						<view class="tui-list">
 							<view class="tui-listItem" @click="onClickOpen">
 								<view class="flex-item flex">
-									<view class="title">
+									<view class="title" v-if="formData.pay_type">
 										{{typeList[formData.pay_type]}}
 									</view>
+									<view v-else>{{$t('withdraw-money.xzcjfs')}}</view>
 								</view>
 								<view class="flex flex-item">
 									<uni-icons :type="typeShow ? 'down' : 'up'" size="20"
 										style="color: rgb(96, 98, 102)"></uni-icons>
 								</view>
 							</view>
-							<view v-if="!binded" class="tui-listItem"
+							<view v-if="!binded&&formData.pay_type" class="tui-listItem"
 								style="background-color: #f4eadd;padding: 30rpx;margin-top: 40rpx;"
 								@click="onClickDetail(formData.pay_type)">
 								<view class="flex-item flex">
@@ -59,80 +60,83 @@
 						</view>
 					</uni-forms-item>
 					<!-- 绑定过银行卡展示的-->
-					<template v-if="formData.pay_type == 'bank_card'">
-						<uni-forms-item :label="$t('withdraw-money.xm')">
-							<view class="tui-list">
-								<view class="tui-listItem">
-									<view class="flex-item flex">
-										<view class="title">
-											{{selectCashInfo.user_name && this.$utils.replaceWithAsterisks(selectCashInfo.user_name,1)}}
+					<template v-if="formData.pay_type">
+						<template v-if="formData.pay_type == 'bank_card'">
+							<uni-forms-item :label="$t('withdraw-money.xm')">
+								<view class="tui-list">
+									<view class="tui-listItem">
+										<view class="flex-item flex">
+											<view class="title">
+												{{selectCashInfo.user_name && this.$utils.replaceWithAsterisks(selectCashInfo.user_name,1)}}
+											</view>
 										</view>
 									</view>
 								</view>
-							</view>
-						</uni-forms-item>
-						<uni-forms-item :label="$t('withdraw-money.gj')">
-							<view class="tui-list">
-								<view class="tui-listItem">
-									<view class="flex-item flex">
-										<view class="title">
-											{{selectCashInfo.gj && this.$utils.replaceWithAsterisks(selectCashInfo.gj,1)}}
+							</uni-forms-item>
+							<uni-forms-item :label="$t('withdraw-money.gj')">
+								<view class="tui-list">
+									<view class="tui-listItem">
+										<view class="flex-item flex">
+											<view class="title">
+												{{selectCashInfo.gj && this.$utils.replaceWithAsterisks(selectCashInfo.gj,1)}}
+											</view>
 										</view>
 									</view>
 								</view>
-							</view>
-						</uni-forms-item>
-						<uni-forms-item :label="$t('withdraw-money.khdz')">
-							<view class="tui-list">
-								<view class="tui-listItem">
-									<view class="flex-item flex">
-										<view class="title">
-											{{selectCashInfo.bank_branch && this.$utils.replaceWithAsterisks(selectCashInfo.bank_branch,2)}}
+							</uni-forms-item>
+							<uni-forms-item :label="$t('withdraw-money.khdz')">
+								<view class="tui-list">
+									<view class="tui-listItem">
+										<view class="flex-item flex">
+											<view class="title">
+												{{selectCashInfo.bank_branch && this.$utils.replaceWithAsterisks(selectCashInfo.bank_branch,2)}}
+											</view>
 										</view>
 									</view>
 								</view>
-							</view>
-						</uni-forms-item>
-						<uni-forms-item :label="$t('withdraw-money.khh')">
-							<view class="tui-list">
-								<view class="tui-listItem">
-									<view class="flex-item flex">
-										<view class="title">
-											{{selectCashInfo.bank_name}}
+							</uni-forms-item>
+							<uni-forms-item :label="$t('withdraw-money.khh')">
+								<view class="tui-list">
+									<view class="tui-listItem">
+										<view class="flex-item flex">
+											<view class="title">
+												{{selectCashInfo.bank_name}}
+											</view>
 										</view>
 									</view>
 								</view>
-							</view>
-						</uni-forms-item>
-						<uni-forms-item :label="$t('withdraw-money.kh')">
-							<view class="tui-list">
-								<view class="tui-listItem">
-									<view class="flex-item flex">
-										<view class="title">
-											{{selectCashInfo.account && getUsdt_back}}
+							</uni-forms-item>
+							<uni-forms-item :label="$t('withdraw-money.kh')">
+								<view class="tui-list">
+									<view class="tui-listItem">
+										<view class="flex-item flex">
+											<view class="title">
+												{{selectCashInfo.account && getUsdt_back}}
+											</view>
 										</view>
 									</view>
 								</view>
-							</view>
-						</uni-forms-item>
+							</uni-forms-item>
+						</template>
+						<!-- trc和erc的 -->
+						<template v-else>
+							<uni-forms-item :label="$t('withdraw-money.dz')">
+								<view class="tui-list">
+									<view class="tui-listItem">
+										<view class="flex-item flex">
+											<view class="title">
+												{{getUsdt_url}}
+											</view>
+										</view>
+									</view>
+								</view>
+							</uni-forms-item>
+							<!-- <view class="tui-submit tui-cancle">
+								{{$t('withdraw-money.qdcj')}}
+							</view> -->
+						</template>
 					</template>
-					<!-- trc和erc的 -->
-					<template v-else>
-						<uni-forms-item :label="$t('withdraw-money.dz')">
-							<view class="tui-list">
-								<view class="tui-listItem">
-									<view class="flex-item flex">
-										<view class="title">
-											{{getUsdt_url}}
-										</view>
-									</view>
-								</view>
-							</view>
-						</uni-forms-item>
-						<!-- <view class="tui-submit tui-cancle">
-							{{$t('withdraw-money.qdcj')}}
-						</view> -->
-					</template>
+					
 					<uni-forms-item :label="$t('withdraw-money.jymm')">
 
 						<uni-easyinput v-model="formData.mpwd" type="password" passwordIcon :inputBorder="true"
@@ -180,7 +184,7 @@
 			return {
 				formData: {
 					money: '',
-					pay_type: 'bank_card',
+					pay_type: '',
 					mpwd: '',
 					num: ''
 				},

@@ -17,16 +17,17 @@ const messages = {
 	'zh-CN': zhCN,
 	'zh-TW': zhTW,
 	'en-US': enUS,
-	'ja-JP': jaJP,
-	'th-TH': thTH,
-	'vi-VN': viVN,
-	'id-ID': idID,
-	'ko-KR': koKR,
-	'fr-FR': frFR,
-	'de-DE': deDE,
+	// 'ja-JP': jaJP,
+	// 'th-TH': thTH,
+	// 'vi-VN': viVN,
+	// 'id-ID': idID,
+	// 'ko-KR': koKR,
+	// 'fr-FR': frFR,
+	// 'de-DE': deDE,
 };
-if (!localStorage.getItem('i18nLang')) {
-	localStorage.setItem('i18nLang', 'zh-CN')
+if (!uni.getStorageSync('i18nLang')) {
+	uni.setStorageSync('i18nLang', 'en-US')
+	uni.setStorageSync('LangName', 'English')
 }
 const locale = uni.getStorageSync('i18nLang');
 let i18nConfig = {

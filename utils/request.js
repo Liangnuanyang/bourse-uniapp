@@ -49,6 +49,11 @@ fly.interceptors.response.use((res) => {
 			title: res.data.massage,
 			icon: 'none'
 		});
+		if(res.data.status== -22){
+			uni.reLaunch({
+				url: '/pages/login/login'
+			})
+		}
 		return Promise.reject(res.data.massage)
 	}
 	return res.data

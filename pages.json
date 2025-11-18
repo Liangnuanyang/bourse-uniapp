@@ -196,6 +196,28 @@
 				"navigationBarTitleText" : "",
 				"navigationStyle": "custom"
 			}
+		},
+		{
+			"path" : "pages/recharge/recharge",
+			"style" : 
+			{
+				"navigationBarTitleText" : "",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/kefu/kefu",
+			"style" : 
+			{
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path" : "pages/Detail/Detail_mg",
+			"style" : 
+			{
+				"navigationStyle": "custom"
+			}
 		}
 
 
@@ -213,15 +235,21 @@
 			},
 			{
 				"pagePath": "pages/product/product",
-				"text": "产品",
+				"text": "行情",
 				"iconPath": "/static/tabbar/chanpin.png",
 				"selectedIconPath": "/static/tabbar/chanpin_active.png"
 			},
 			{
-				"pagePath": "pages/money/money",
-				"text": "余额宝",
-				"iconPath": "/static/tabbar/yue.png",
-				"selectedIconPath": "/static/tabbar/yue_active.png"
+				"pagePath": "pages/Detail/Detail",
+				"text": "交易",
+				"iconPath": "/static/tabbar/jiaoyi.png",
+				"selectedIconPath": "/static/tabbar/jiaoyi_active.png"
+			},
+			{
+				"pagePath": "pages/kefu/kefu",
+				"text": "客服",
+				"iconPath": "/static/tabbar/kefu.png",
+				"selectedIconPath": "/static/tabbar/kefu_active.png"
 			},
 			{
 				"pagePath": "pages/user/user",

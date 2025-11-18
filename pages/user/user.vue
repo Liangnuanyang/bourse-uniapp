@@ -7,7 +7,8 @@
 				</view>
 				<view class="desc">
 					<view class="rellname">
-						{{userInfo.real_name.substr(0,1)+new Array(userInfo.real_name.length).join('*')}}
+						{{userInfo.real_name}}
+						<!-- {{userInfo.real_name.substr(0,1)+new Array(userInfo.real_name.length).join('*')}} -->
 					</view>
 					<view class="tui-vip">
 						<image src="/static/vip.png" mode=""></image>
@@ -23,11 +24,11 @@
 					</view>
 				</view>
 			</view>
-			<view class="tui-kaihu" hover-class="tui-kaihuHover" @click="onClickFuzhi(userInfo.code)">
+			<!-- <view class="tui-kaihu" hover-class="tui-kaihuHover" @click="onClickFuzhi(userInfo.code)">
 				<text>{{$t('user.khm')}}</text>
 				<text style="padding-left: 10rpx;">{{userInfo.code}}</text>
 				<image src="../../static/fuzhi.png" mode=""></image>
-			</view>
+			</view> -->
 		</view>
 		<view class="tui-money">
 			<view class="normal">
@@ -104,7 +105,7 @@
 				<image class="tui-rightIcon" src="../../static/youjian.png" mode=""></image>
 			</view>
 		</view>
-		<tabbar :actIndex="3"></tabbar>
+		<tabbar :actIndex="4"></tabbar>
 	</view>
 </template>
 
@@ -171,14 +172,17 @@
 				});
 			},
 			getUserIndex() {
-				getUserIndex({
-					hideLoading: true,
-				}).then(({
-					data
-				}) => {
-
-					window.open(data.kefu_url,'_self')
-				});
+				// getUserIndex({
+				// 	hideLoading: true,
+				// }).then(({
+				// 	data
+				// }) => {
+                  
+				// 	window.open(data.kefu_url,'_self')
+				// });
+				uni.navigateTo({
+					url: '/pages/recharge/recharge'
+				})
 			},
 			getDetail() {
 				userInfo({
@@ -187,6 +191,7 @@
 					data
 				}) => {
 					this.userInfo = data
+					uni.setStorageSync('userInfo',data)
 				})
 			},
 			onClickMoney() {

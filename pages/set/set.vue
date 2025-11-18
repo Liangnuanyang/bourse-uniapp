@@ -11,7 +11,7 @@
 					</view>
 					<view class="flex flex-item">
 						<view class="language">
-							{{$t('set.yy')}}
+							{{LangName}}
 						</view>
 						<image class="tui-rightIcon" src="/static/youjian.png" mode=""></image>
 					</view>
@@ -37,7 +37,7 @@
 					</view>
 					<view class="flex flex-item">
 						<view class="language">
-							{{$t('set.xg')}}
+							{{ hasPaypwd?$t('set.xg'): $t('set.sz')}}
 						</view>
 						<image class="tui-rightIcon" src="/static/youjian.png" mode=""></image>
 					</view>
@@ -75,13 +75,18 @@
 		},
 		data() {
 			return {
-
+				LangName: '',
+				hasPaypwd: false
 			};
+		},
+		onShow() {
+			this.LangName = uni.getStorageSync('LangName')
+			this.hasPaypwd = uni.getStorageSync('userInfo').mpasswd?true:false
 		},
 		methods: {
 			clickPassword(type) {
 				uni.navigateTo({
-					url:'/pages/password/password?type=' + type
+					url: '/pages/password/password?type=' + type
 				})
 			},
 			onClickLeft() {

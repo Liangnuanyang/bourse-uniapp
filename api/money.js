@@ -36,6 +36,10 @@ export const doAuth = function(data = {}) {
 export const goods = function(data = {}) {
 	return request.get('index/goods', data)
 }
+// 美股-- 商品列表
+export const goods_mg = function(data = {}) {
+	return request.get('index/goods_mg', data)
+}
 // 余额宝明细
 export const getMoneyLog = function(data = {}) {
 	return request.get('yuebao/log', data)
@@ -43,6 +47,10 @@ export const getMoneyLog = function(data = {}) {
 //商品详情
 export const goods_dec = function(data = {}) {
 	return request.get('index/goods_dec', data)
+}
+//美股 --商品详情
+export const goods_mg_dec = function(data = {}) {
+	return request.get('index/goods_mg_dec', data)
 }
 //消息未读数量
 export const get_count = function(data = {}) {

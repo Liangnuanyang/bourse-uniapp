@@ -115,9 +115,9 @@
 			};
 		},
 		onLoad() {
-			this.timer = setInterval(_ => {
+			this.timer = setInterval(_ => {}, 1000)
 				this.orderlist()
-			}, 1000)
+			
 		},
 		onHide() {
 			clearInterval(this.timer)
@@ -143,12 +143,16 @@
 				this.orderlist()
 			},
 			orderlist() {
+				uni.showLoading({
+					title: ''
+				})
 				orderlist({
 					status: this.activeTab == 0 ? 1 : 3,
 					hideLoading: true
 				}).then(({
 					data
 				}) => {
+					uni.hideLoading()
 					console.log(data)
 					if (data.lists.length !== 0) {
 						this.isData = false

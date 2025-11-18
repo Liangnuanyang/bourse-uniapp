@@ -65,11 +65,15 @@
 		},
 		methods: {
 			mark() {
+				uni.showLoading({
+					title: ''
+				})
 				mark({
 					hideLoading: true,
 				}).then(({
 					data
 				}) => {
+					uni.hideLoading()
 					console.log(data)
 					if (data.lists.length !== 0) {
 						this.isData = false

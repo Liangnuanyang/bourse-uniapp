@@ -1,11 +1,11 @@
 <template>
 	<view>
-		<view class="tui-search">
+		<!-- <view class="tui-search">
 			<uni-easyinput class="uni-mt-5" suffixIcon="search" :placeholder="$t('product.ss')" :inputBorder="true"
 				:styles="styles" primaryColor="#1150c2" placeholderStyle="color:#c9c9c9;font-size:28rpx"
 				v-model="searchText"></uni-easyinput>
-		</view>
-		<view class="tui-tabs">
+		</view> -->
+		<view class="tui-tabs" :style="{ paddingTop: statusBarHeight + 'px' }">
 			<v-tabs v-model="current" :tabs="tabs" @change="changeTab" color="#a8a9ac" activeColor="#222"
 				lineColor="#1150c2" bold bgColor=""></v-tabs>
 		</view>
@@ -54,7 +54,8 @@
 
 <script>
 	import {
-		goods
+		goods,
+		goods_mg
 	} from '@/api/money.js'
 	export default {
 		components: {
@@ -66,10 +67,11 @@
 					'borderColor': '#fff'
 				},
 				current: 0,
-				tabs: [this.$t('product.hbzl')],
+				tabs: [this.$t('product.hbzl'),this.$t('detail.meigu')],
 				goodsList: [],
 				timer: null,
-				searchText: ''
+				searchText: '',
+				statusBarHeight: 0
 			};
 		},
 		onUnload() {
@@ -84,42 +86,54 @@
 			if (this.timer) {
 				clearInterval(this.timer);
 			}
+			
 		},
 		onLoad() {
-			this.getGoods()
+			const systemInfo = uni.getSystemInfoSync()
+			this.statusBarHeight = systemInfo.statusBarHeight || 20
+			this.getGoods(false)
 		},
 		onShow() {
 			this.timer = setInterval(() => {
 
-				goods({
-					hideLoading: true,
-				}).then(({
-					data
-				}) => {
-
-					this.goodsList = data
-				})
+				if(this.current==0){
+					this.getGoods(true)
+				}else{
+					this.getGoods_mg(true)
+				}
 			}, 5000);
 
 		},
 		methods: {
+			
 			onClickDetail({
 				id,
 				codename,
 				title
 			}) {
-				uni.navigateTo({
-					url: `/pages/Detail/Detail?id=${id}&codename=${codename}&title=${title}`
-				})
+				if(this.current==0){
+					uni.setStorageSync('kid',id)
+					uni.setStorageSync('codename',codename)
+					uni.setStorageSync('title',title)
+					//
+					uni.switchTab({
+						url: `/pages/Detail/Detail`
+					})
+				}else{
+					uni.navigateTo({
+						url: `/pages/Detail/Detail_mg??id=${id}&codename=${codename}&title=${title}`
+					})
+				}
+				
 			},
 			setColor(e) {
 				if (this.searchText.indexOf(e) != -1) {
 					return 'color:#1150c2' //自定义颜色
 				}
 			},
-			getGoods() {
+			getGoods(hideLoading) {
 				goods({
-					hideLoading: true,
+					hideLoading: hideLoading,
 				}).then(({
 					data
 				}) => {
@@ -127,8 +141,23 @@
 					this.goodsList = data
 				})
 			},
+			getGoods_mg(hideLoading) {
+				goods_mg({
+					hideLoading: hideLoading,
+				}).then(({
+					data
+				}) => {
+					this.goodsList = data
+				})
+			},
 			changeTab(index) {
 				console.log('当前选中的项：' + index)
+				this.current = index
+				if(index==0){
+					this.getGoods(false)
+				}else{
+					this.getGoods_mg(false)
+				}
 			}
 		}
 	}
@@ -234,8 +263,14 @@
 	}
 
 	.tui-tabs {
-		padding: 0 15rpx;
+		padding: 0rpx 15rpx;
 		box-sizing: border-box;
+		background-color: #fff;
+		// height: 120rpx;
+		display: flex;
+		align-items: center;
+		padding-top: constant(safe-area-inset-top);
+		padding-top: env(safe-area-inset-top);
 	}
 
 	/deep/.uni-easyinput__content {
