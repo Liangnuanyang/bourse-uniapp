@@ -1,10 +1,11 @@
 <template>
 	<view>
 		<!-- 导航栏 -->
-		<uni-nav-bar :border="false" statusBar leftWidth="230rpx" rightWidth="230rpx" backgroundColor="#f6f7fb">
+		<uni-nav-bar :border="false" statusBar leftWidth="280rpx" rightWidth="230rpx" backgroundColor="#f6f7fb">
 			<template v-slot:left>
 				<view class="tui-img">
-					<image src="../../static/logo.png" mode=""></image>
+					<image src="../../static/logo2.png" mode="widthFix"></image>
+					<text style="color: #014923;font-weight: bold;">{{$t('app.name')}}</text>
 				</view>
 			</template>
 			<template v-slot:right>
@@ -38,7 +39,7 @@
 			</view>
 		</view>
 		<!-- 底部 -->
-		<view class="bottom" >
+		<view class="bottom">
 			<view class="tui-first">
 				<view class="register" @click="onClickRegister">
 					{{$t('login.ljzc')}}
@@ -90,13 +91,13 @@
 				windowHeight: ''
 			};
 		},
-        onShow() {
-        	this.LangName = uni.getStorageSync('LangName')
-			if(!this.LangName){
+		onShow() {
+			this.LangName = uni.getStorageSync('LangName')
+			if (!this.LangName) {
 				this.LangName = 'English'
 				uni.setStorageSync('LangName', this.LangName)
 			}
-        },
+		},
 		onLoad() {
 			uni.getSystemInfo({
 				success: (res) => {
@@ -123,7 +124,7 @@
 					//TODO handle the exception
 					return true
 				}
-			
+
 				return false
 			}
 		},
@@ -284,13 +285,12 @@
 	}
 
 	.tui-img {
-
-		width: 188rpx;
-		height: 54rpx;
+		display: flex;
+		align-items: center;
 
 		image {
-			width: 100%;
-			height: 100%;
+			width: 80rpx;
+			height: 54rpx;
 		}
 	}
 

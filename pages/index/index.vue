@@ -2,7 +2,8 @@
 	<view class="tui-header">
 		<view class="tui-NavHeader" :style="stickyStyle">
 			<view class="tui-img">
-				<image src="@/static/logo.png" mode=""></image>
+				<image src="@/static/logo2.png" mode="widthFix"></image>
+				<text style="color: #014923;font-weight: bold;">{{$t('app.name')}}</text>
 			</view>
 			<view class="tui-right" @click="$refs['langChange'].open()">
 				<image src="@/static/diqiu.png" mode=""></image>
@@ -15,7 +16,9 @@
 				<swiper class="swiper-box" @change="change" autoplay>
 					<swiper-item v-for="(item, index) in info" :key="index">
 						<view class="swiper-item" :class="'swiper-item' + index">
-							<image :src="item" mode=""></image>
+							<image src="/static/banner1.jpg" mode="aspectFill"></image>
+							<!-- 	<image src="/static/banner2.jpg" mode="" v-if="index==1"></image>
+							<image src="/static/banner3.jpg" mode="" v-if="index==2"></image> -->
 						</view>
 					</swiper-item>
 				</swiper>
@@ -235,11 +238,7 @@
 				isFold: false,
 				current: 0,
 				mode: "dot",
-				info: [
-					"https://dkzk65jpm6jtb.cloudfront.net/storage/banner/image/de8940e7b3d5aedfdac21084195d4bc9.jpeg",
-					"https://dkzk65jpm6jtb.cloudfront.net/storage/banner/image/063d3e72a395a86456b454173ec64e42.jpeg",
-
-				],
+				info: [{}],
 				dotsStyles: {
 					selectedBackgroundColor: "#fff",
 					selectedBorder: "#fff",
@@ -1035,12 +1034,12 @@
 		background: url(/static/bg.png) no-repeat;
 
 		.tui-img {
-			width: 188rpx;
-			height: 54rpx;
+             display: flex;
+			 align-items: center;
 
 			image {
-				width: 100%;
-				height: 100%;
+				width: 90rpx;
+				height: 54rpx;
 			}
 		}
 

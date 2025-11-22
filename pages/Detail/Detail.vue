@@ -143,7 +143,7 @@
 				<view class="tui-purchase">
 					<view class="tui-title">
 						<view class="flex">
-							<text class="name">{{pageDetail.title}}</text>
+							<text class="name">{{LangName=='English'? pageDetail.title_en:pageDetail.title}}</text>
 							<text class="bade"
 								:style="{background:deal.isType == 1 ?  '#f33b50' :'#0bb563'}">{{deal.isType==1?$t('detail.sg'):$t('detail.sc')}}</text>
 						</view>
@@ -342,7 +342,8 @@
 					borderColor: "#f6f8fa",
 				},
 				getUserItem: {},
-				orderCountNum: 0
+				orderCountNum: 0,
+				LangName: uni.getStorageSync('LangName')
 			};
 		},
 		computed: {
@@ -412,10 +413,10 @@
 			if (this.orderTimer) {
 				clearInterval(this.orderTimer);
 			}
-			uni.removeStorageSync('kid')
-			uni.removeStorageSync('codename')
-			uni.removeStorageSync('title')
-			this.options = {}
+			// uni.removeStorageSync('kid')
+			// uni.removeStorageSync('codename')
+			// uni.removeStorageSync('title')
+			// this.options = {}
 		},
 		methods: {
 			getOrderCountNum() {

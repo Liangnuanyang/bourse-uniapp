@@ -1,4 +1,5 @@
 export default {
+	'app.name': "SINOGRAIN",
 	'app.yymc': 'Simplified Chinese',
 	'app.yysz': 'Language Settings',
 	'app.qr': 'Confirm',

@@ -1,6 +1,7 @@
 <template>
 	<view class="welcome">
-		<image class="logo" src="@/static/logo.png" mode="aspectFit" />
+		<image class="logo" src="@/static/logo2.png" mode="widthFix" />
+		<view style="color: #014923;font-weight: bold;margin-top: 10rpx;text-align: center;">{{$t('app.name')}}</view>
 		<view class="progressBox">
 			<view class="progressNow" :style="{width:progressNum+'%'}">
 				<image class="run" src="@/static/run.png" mode=""></image>
@@ -55,7 +56,7 @@
 		height: 100vh;
 
 		.logo {
-			width: 274rpx;
+			width: 150rpx;
 		}
 
 		.progressBox {

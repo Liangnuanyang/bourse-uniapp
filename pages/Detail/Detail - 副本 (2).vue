@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<guo-headerTitle :isLeft="true" :title="options.title" :isTitleImg="true" :isRight="true"
+		<guo-headerTitle :isLeft="false" :title="options.title" :isTitleImg="true" :isRight="true"
 			:orderNum="orderCountNum" @onClickTitle="onClickTitle"></guo-headerTitle>
 		<view class="tui-header">
 			<view class="tui-border" v-if="getUserItem.b_is == 1">
@@ -143,7 +143,7 @@
 				<view class="tui-purchase">
 					<view class="tui-title">
 						<view class="flex">
-							<text class="name">{{LangName=='English'? pageDetail.title_en:pageDetail.title}}</text>
+							<text class="name">{{pageDetail.title}}</text>
 							<text class="bade"
 								:style="{background:deal.isType == 1 ?  '#f33b50' :'#0bb563'}">{{deal.isType==1?$t('detail.sg'):$t('detail.sc')}}</text>
 						</view>
@@ -275,6 +275,7 @@
 				</view>
 			</scroll-view>
 		</uni-drawer>
+		<tabbar :actIndex="2"></tabbar>
 	</view>
 </template>
 
@@ -285,8 +286,7 @@
 		goodMicrotrade
 	} from "@/api/detail.js";
 	import {
-		goods_mg,
-		goods_mg_dec
+		goods
 	} from '@/api/money.js'
 	import {
 		userInfo,
@@ -297,7 +297,8 @@
 	} from "@/api/order.js"
 	export default {
 		components: {
-			kline: () => import("@/components/kline/index.vue")
+			kline: () => import("@/components/kline/index.vue"),
+			tabbar: () => import("@/components/tabbar.vue"),
 
 		},
 		data() {
@@ -341,8 +342,7 @@
 					borderColor: "#f6f8fa",
 				},
 				getUserItem: {},
-				orderCountNum: 0,
-				LangName: uni.getStorageSync('LangName')
+				orderCountNum: 0
 			};
 		},
 		computed: {
@@ -375,10 +375,27 @@
 		onLoad(options) {
 			console.log('------options------', options)
 			this.getUserIndex()
-            this.options = options
+
+		},
+		onShow() {
+			console.log('----onShow-----')
+			const id = uni.getStorageSync('kid')
+			const codename = uni.getStorageSync('codename')
+			const title = uni.getStorageSync('title')
+			console.log('======id====', id)
+			console.log('======codename====', codename)
+			console.log('======codename====', title)
+
+			if (id) {
+				this.options = {
+					id: id,
+					codename: codename,
+					title: title
+				}
+			}
+
 			this.getGoods()
 		},
-		
 		onUnload() {
 			// 页面销毁时清除定时器
 			if (this.timer) {
@@ -514,14 +531,14 @@
 				}) => {
 
 					this.klineList = data || [];
-					// console.log('----------', this.klineList)
+					console.log('----------', this.klineList)
 					this.$nextTick(_ => {
 						this.$refs['kline'].init()
 					})
 				});
 			},
 			getGoods() {
-				goods_mg({
+				goods({
 					hideLoading: true,
 				}).then(({
 					data
@@ -800,7 +817,7 @@
 		padding: 30rpx 40rpx;
 		position: fixed;
 		left: 0;
-		bottom: 0;
+		bottom: 100rpx;
 
 		padding-bottom: 42rpx;
 		font-size: 24rpx;

@@ -1,4 +1,5 @@
 export default {
+	'app.name': "中儲糧",
 	'app.yymc': '簡體中文',
 	'app.yysz': '語言設置',
 	'app.qr': '確認',

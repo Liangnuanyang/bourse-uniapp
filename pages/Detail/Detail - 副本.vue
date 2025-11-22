@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<guo-headerTitle :isLeft="true" :title="options.title" :isTitleImg="true" :isRight="true"
+		<guo-headerTitle :isLeft="false" :title="options.title" :isTitleImg="true" :isRight="true"
 			:orderNum="orderCountNum" @onClickTitle="onClickTitle"></guo-headerTitle>
 		<view class="tui-header">
 			<view class="tui-border" v-if="getUserItem.b_is == 1">
@@ -61,7 +61,13 @@
 					:tabs="timeTabs.map(item=>item.text)" color="rgb(168, 169, 172)" activeColor="#222" bold
 					lineColor="#1150c2" :lineScale="0.2" bgColor="#f6f7fb" :zIndex="1"></v-tabs>
 			</view>
-			<kline ref="kline" :data="klineList"></kline>
+			<!-- <kline ref="kline" :data="klineList"></kline> -->
+			<!-- #ifdef APP -->
+			<canvas canvas-id="klineCanvas" style="width:100%;height:400px;"></canvas>
+			<!-- #endif -->
+			<!-- #ifdef H5 -->
+				 <div id="klineContainer" style="width:100%;height:400px;"></div>
+			<!-- #endif -->
 			<view class="tui-btn">
 				<button class="btn" :style="{background:getUserItem.b_is == 1 ? 'rgba(241,243,246)' : '#f33b50'}"
 					@click="dealPopupOpen(1)">{{$t('detail.sg')}}</button>
@@ -143,7 +149,7 @@
 				<view class="tui-purchase">
 					<view class="tui-title">
 						<view class="flex">
-							<text class="name">{{LangName=='English'? pageDetail.title_en:pageDetail.title}}</text>
+							<text class="name">{{pageDetail.title}}</text>
 							<text class="bade"
 								:style="{background:deal.isType == 1 ?  '#f33b50' :'#0bb563'}">{{deal.isType==1?$t('detail.sg'):$t('detail.sc')}}</text>
 						</view>
@@ -275,18 +281,21 @@
 				</view>
 			</scroll-view>
 		</uni-drawer>
+		<tabbar :actIndex="2"></tabbar>
 	</view>
 </template>
 
 <script>
+	import {
+		init
+	} from 'klinecharts';
 	import {
 		goodDetail,
 		goodKline,
 		goodMicrotrade
 	} from "@/api/detail.js";
 	import {
-		goods_mg,
-		goods_mg_dec
+		goods
 	} from '@/api/money.js'
 	import {
 		userInfo,
@@ -297,7 +306,8 @@
 	} from "@/api/order.js"
 	export default {
 		components: {
-			kline: () => import("@/components/kline/index.vue")
+			kline: () => import("@/components/kline/index.vue"),
+			tabbar: () => import("@/components/tabbar.vue"),
 
 		},
 		data() {
@@ -341,8 +351,7 @@
 					borderColor: "#f6f8fa",
 				},
 				getUserItem: {},
-				orderCountNum: 0,
-				LangName: uni.getStorageSync('LangName')
+				orderCountNum: 0
 			};
 		},
 		computed: {
@@ -375,10 +384,28 @@
 		onLoad(options) {
 			console.log('------options------', options)
 			this.getUserIndex()
-            this.options = options
+
+		},
+		onShow() {
+			console.log('----onShow-----')
+			
+		},
+		onReady() {
+			console.log('======onReady=========')
+			const id = uni.getStorageSync('kid')
+			const codename = uni.getStorageSync('codename')
+			const title = uni.getStorageSync('title')
+					
+			if (id) {
+				this.options = {
+					id: id,
+					codename: codename,
+					title: title
+				}
+			}
+			
 			this.getGoods()
 		},
-		
 		onUnload() {
 			// 页面销毁时清除定时器
 			if (this.timer) {
@@ -514,14 +541,48 @@
 				}) => {
 
 					this.klineList = data || [];
-					// console.log('----------', this.klineList)
-					this.$nextTick(_ => {
-						this.$refs['kline'].init()
+					console.log('----------', this.klineList)
+					// this.$nextTick(_ => {
+					// 	this.$refs['kline'].init()
+					// })
+					// 初始化 K 线图
+					this.$nextTick(() => {
+						  setTimeout(() => {
+						    // 同上逻辑
+							const isH5 = process.env.UNI_PLATFORM === 'h5';
+							let chart;
+							if(isH5){
+								  const container = document.getElementById('klineContainer');
+								  chart = init(container);
+							}else{
+								const query = uni.createSelectorQuery().in(this);
+								query.select('#klineCanvas').fields({ node: true, size: true }).exec(res => {
+								  if (!res || !res[0] || !res[0].node) {
+								    console.error('canvas节点获取失败！');
+								    return;
+								  }
+								  const canvas = res[0].node;
+								  const width = res[0].width;
+								  const height = res[0].height;
+														
+								   chart = init(canvas, { width, height });
+														
+								
+														
+								
+								});
+							}
+							// 假设 klineData 已经准备好了
+							chart.applyNewData(this.klineList);
+							chart.createIndicator('VOL')
+							  this.chart = chart;
+						  }, 50); // 延迟 50ms 确保 canvas 渲染完成
+						
 					})
 				});
 			},
 			getGoods() {
-				goods_mg({
+				goods({
 					hideLoading: true,
 				}).then(({
 					data
@@ -551,6 +612,16 @@
 					}
 				})
 			},
+			// transformApiData(apiData) {
+			// 	return apiData.map(item => ({
+			// 		timestamp: item[0],
+			// 		open: parseFloat(item[1]),
+			// 		high: parseFloat(item[2]),
+			// 		low: parseFloat(item[3]),
+			// 		close: parseFloat(item[4]),
+			// 		volume: parseFloat(item[5])
+			// 	}));
+			// }
 			onClickTitle() {
 				this.$refs.showLeft.open();
 				// this.getGoods()
@@ -800,7 +871,7 @@
 		padding: 30rpx 40rpx;
 		position: fixed;
 		left: 0;
-		bottom: 0;
+		bottom: 100rpx;
 
 		padding-bottom: 42rpx;
 		font-size: 24rpx;
