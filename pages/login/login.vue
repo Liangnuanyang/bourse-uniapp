@@ -140,6 +140,7 @@
 			onClickMessage() {
 				getUserIndex({
 					hideLoading: true,
+					checkFree: true
 				}).then(({
 					data
 				}) => {

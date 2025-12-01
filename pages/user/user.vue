@@ -124,10 +124,10 @@
 					real_name: '',
 				},
 				settingList: [
-					// 	{
-					// 	title: this.$t("user.smrz"),
-					// 	icon: require("@/static/smrz.png")
-					// },
+					{
+						title: this.$t("user.smrz"),
+						icon: require("@/static/smrz.png")
+					},
 					{
 						title: this.$t("user.ddjl"),
 						icon: require("@/static/wddd.png")
@@ -160,7 +160,7 @@
 			onClickFuzhi(text) {
 				uni.setClipboardData({
 					data: text,
-					success: ()=> {
+					success: () => {
 						console.log('复制成功');
 						// 可以添加用户友好的提示，例如使用uni.showToast提示复制成功
 						uni.showToast({
@@ -177,7 +177,7 @@
 				// }).then(({
 				// 	data
 				// }) => {
-                  
+
 				// 	window.open(data.kefu_url,'_self')
 				// });
 				uni.navigateTo({
@@ -191,7 +191,7 @@
 					data
 				}) => {
 					this.userInfo = data
-					uni.setStorageSync('userInfo',data)
+					uni.setStorageSync('userInfo', data)
 				})
 			},
 			onClickMoney() {
@@ -201,12 +201,12 @@
 			},
 			onClickPath(item, index) {
 				switch (index) {
-					case 5:
+					case 6: // 设置
 						uni.navigateTo({
 							url: '/pages/set/set'
 						})
 						break;
-					case 6:
+					case 7: // 退出登录
 						uni.showModal({
 							title: this.$t("user.tcdl"),
 							content: this.$t("user.qdtc"),
@@ -221,36 +221,36 @@
 							}
 						});
 						break;
-					case 4:
+					case 5: //出款账户
 						uni.navigateTo({
 							url: '/pages/account/account'
 						})
 						break;
-					case 3:
+					case 4: // 资金记录
 						uni.navigateTo({
 							url: '/pages/money-record/money-record'
 						})
 						break;
-					case 0:
+					case 1: // 订单记录
 						uni.navigateTo({
 							url: '/pages/order/order'
 						})
 						break;
-					case 2:
+					case 3:// 出金明细
 						uni.navigateTo({
 							url: '/pages/withdraw-list/withdraw-list'
 						})
 						break;
-					case 1:
+					case 2: // 入金明细
 						uni.navigateTo({
 							url: '/pages/withdraw-list/withdraw-open'
 						})
 						break;
-						// case 0:
-						// 	uni.navigateTo({
-						// 		url: '/pages/verify/verify'
-						// 	})
-						// 	break;
+					case 0: //实名认证
+						uni.navigateTo({
+							url: '/pages/verify/verify'
+						})
+						break;
 				}
 
 			}

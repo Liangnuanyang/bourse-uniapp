@@ -2,6 +2,17 @@
 	<view>
 		<guo-headerTitle :title="$t('verify.smrz')"></guo-headerTitle>
 		<view class="tui-register" v-if="userInfo.is_auth == 0 || userInfo.is_auth == -1">
+		<picker mode="selector" :range="options" :value="index" @change="onChange">
+			<view style="display: flex;flex-direction: row;justify-content: space-between;padding: 30rpx;background: white;border-radius: 30rpx;">
+				<view style="color: #666;">选择证件类型</view>
+				<view class="action" style="display: flex;flex-direction: row;align-items: center;">
+					<text class="text-black" style="font-weight: bold;">{{typeName}}</text>
+					<!-- <image src="@/static/new/arrow-right.png" mode="widthFix" style="width: 40rpx;height: 40rpx;">
+					</image> -->
+					<uni-icons type="right" size="20"></uni-icons>
+				</view>
+			</view>
+		</picker>
 			<view class="tui-form">
 				<uni-forms ref="form" :modelValue="formData" label-position="top" label-width="200px" :rules="rules">
 					<uni-forms-item :label="$t('verify.xm')" name="real_name" required>
@@ -141,13 +152,22 @@
 					}
 				},
 				img1: '',
-				img2: ''
+				img2: '',
+				options: ['身份证','护照','驾驶证'],
+				index: 0,
+				typeName: '身份证',
 			};
 		},
 		onLoad() {
+			// this.options = this.typelist.map(item=>  item.type)
+			console.log(this.options)
 			this.getDetail()
 		},
 		methods: {
+			onChange(e){
+				console.log(e.detail.value)
+				this.typeName = this.options[e.detail.value]
+			},
 			getDetail() {
 				userInfo({
 					hideLoading: true

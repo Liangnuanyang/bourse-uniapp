@@ -7,6 +7,7 @@ fly.config.baseURL = utils.getQueryUrl()
 // 添加请求拦截器
 fly.interceptors.request.use((request) => {
 	const token = store.state.token;
+	console.log('----request------',request)
 	if (!request.body['checkFree'] && !token) {
 		console.log('跳转登录', utils.getUrl())
 		//需要登录才能请求,未登录

@@ -4,10 +4,10 @@ const h5Appid = 'wx025090c8839f889a'
 const getQueryUrl = function() {
 	if (process.env.NODE_ENV === 'development') {
 		//开发环境请求地址---在manifest.json配置跨域
-		return 'https://streampower.cyou/api'
+		return 'https://zhchn.shop/api'
 	} else if (process.env.NODE_ENV === 'production') {
 		//正式环境请求地址
-		return 'https://streampower.cyou/api'
+		return 'https://zhchn.shop/api'
 	}
 }
 //获取当前运行域名
