@@ -2,8 +2,8 @@
 	<view>
 		<guo-headerTitle :title="$t('verify.smrz')"></guo-headerTitle>
 		<view class="tui-register" v-if="userInfo.is_auth == 0 || userInfo.is_auth == -1">
-		<picker mode="selector" :range="options" :value="index" @change="onChange">
-			<view style="display: flex;flex-direction: row;justify-content: space-between;padding: 30rpx;background: white;border-radius: 30rpx;">
+			<view @click="showcardpopup"
+				style="display: flex;flex-direction: row;justify-content: space-between;padding: 30rpx;background: white;border-radius: 30rpx;">
 				<view style="color: #666;">{{$t('zjlx')}}</view>
 				<view class="action" style="display: flex;flex-direction: row;align-items: center;">
 					<text class="text-black" style="font-weight: bold;">{{typeName}}</text>
@@ -12,7 +12,6 @@
 					<uni-icons type="right" size="20"></uni-icons>
 				</view>
 			</view>
-		</picker>
 			<view class="tui-form">
 				<uni-forms ref="form" :modelValue="formData" label-position="top" label-width="200px" :rules="rules">
 					<uni-forms-item :label="$t('verify.xm')" name="real_name" required>
@@ -24,8 +23,8 @@
 							:inputBorder="true" :styles="styles" primaryColor="#1150c2" @blur="SetValue('id_card')" />
 					</uni-forms-item>
 					<uni-forms-item :label="$t('verify.gj')" name="gj" required>
-						<uni-easyinput v-model="formData.gj" :placeholder="$t('verify.srgj')" :inputBorder="true" :styles="styles"
-							primaryColor="#1150c2" @blur="SetValue('gj')" />
+						<uni-easyinput v-model="formData.gj" :placeholder="$t('verify.srgj')" :inputBorder="true"
+							:styles="styles" primaryColor="#1150c2" @blur="SetValue('gj')" />
 					</uni-forms-item>
 					<uni-forms-item :label="$t('verify.sczjz')">
 						<view class="tui-certificate">
@@ -92,6 +91,25 @@
 				</view>
 			</view>
 		</uni-popup>
+		<uni-popup ref="popupcard" type="bottom" border-radius="10px 10px 0 0">
+			<view class="tui-popupContent">
+				<view class="flex flex-between flex-item p-26">
+					<view class="title">
+						{{$t('zjlx')}}
+					</view>
+					<view class="cancle" @click="onCancle">
+						{{$t('app.qx')}}
+					</view>
+				</view>
+				<view class="tui-content">
+					<view class="tui-contentItem" v-for="(item,index) in options" :key="index" @click="seletcard(item)"
+						:class="[{'tui-activite':typeName==item}]">
+						{{item}}
+					</view>
+
+				</view>
+			</view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -153,7 +171,7 @@
 				},
 				img1: '',
 				img2: '',
-				options: [this.$t('sfz'),this.$t('huzhao'),this.$t('jiashizheng')],
+				options: [this.$t('sfz'), this.$t('huzhao'), this.$t('jiashizheng')],
 				index: 0,
 				typeName: this.$t('sfz'),
 			};
@@ -164,7 +182,17 @@
 			this.getDetail()
 		},
 		methods: {
-			onChange(e){
+			showcardpopup(){
+				this.$refs.popupcard.open()
+			},
+			seletcard(item) {
+				this.typeName = item
+				this.onCancle()
+			},
+			onCancle(){
+				this.$refs.popupcard.close()
+			},
+			onChange(e) {
 				console.log(e.detail.value)
 				this.typeName = this.options[e.detail.value]
 			},
@@ -387,6 +415,46 @@
 		.tui-title {
 			font-size: 44rpx;
 			font-weight: 800;
+		}
+	}
+
+	.tui-popupContent {
+		border-radius: 24px 24px 0 0;
+		padding: 48rpx 0 0;
+		background-color: #fff;
+
+		.p-26 {
+			padding: 0 32rpx;
+		}
+
+		.tui-content {
+			margin-top: 40rpx;
+			padding-bottom: 100rpx;
+
+			.tui-contentItem {
+				height: 100rpx;
+				font-size: 28rpx;
+				color: #222;
+				display: flex;
+				align-items: center;
+				padding: 0 32rpx;
+			}
+
+			.tui-activite {
+				background-color: #f3f5f6 !important;
+				color: #1150c2 !important;
+			}
+		}
+
+		.title {
+			font-size: 32rpx;
+			font-weight: 800;
+			color: #222;
+		}
+
+		.cancle {
+			color: #a8a9ac;
+			font-size: 28rpx;
 		}
 	}
 
