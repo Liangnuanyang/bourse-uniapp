@@ -231,4 +231,9 @@ export default {
 	'password.xgzfmm': '修改支付密碼',
 	'detail.ssz': '修市中',
 	'detail.kssj': '開市時間',
+	'zjlx': '選擇證件類型',
+	'sfz': '身份證',
+	'huzhao': '護照',
+	'jiashizheng': '駕駛證'
+	
 }

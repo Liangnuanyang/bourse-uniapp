@@ -230,4 +230,8 @@ export default {
 	'password.xgzfmm': 'Ubah Kata Sandi Pembayaran',
 	'detail.ssz': 'Dalam Pemeliharaan',
 	'detail.kssj': 'Waktu Buka',
+	'zjlx': 'Pilih Jenis Dokumen',
+	'sfz': 'Kartu Identitas',
+	'huzhao': 'Paspor',
+	'jiashizheng': 'Surat Izin Mengemudi'
 }

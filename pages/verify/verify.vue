@@ -4,7 +4,7 @@
 		<view class="tui-register" v-if="userInfo.is_auth == 0 || userInfo.is_auth == -1">
 		<picker mode="selector" :range="options" :value="index" @change="onChange">
 			<view style="display: flex;flex-direction: row;justify-content: space-between;padding: 30rpx;background: white;border-radius: 30rpx;">
-				<view style="color: #666;">选择证件类型</view>
+				<view style="color: #666;">{{$t('zjlx')}}</view>
 				<view class="action" style="display: flex;flex-direction: row;align-items: center;">
 					<text class="text-black" style="font-weight: bold;">{{typeName}}</text>
 					<!-- <image src="@/static/new/arrow-right.png" mode="widthFix" style="width: 40rpx;height: 40rpx;">
@@ -153,9 +153,9 @@
 				},
 				img1: '',
 				img2: '',
-				options: ['身份证','护照','驾驶证'],
+				options: [this.$t('sfz'),this.$t('huzhao'),this.$t('jiashizheng')],
 				index: 0,
-				typeName: '身份证',
+				typeName: this.$t('sfz'),
 			};
 		},
 		onLoad() {

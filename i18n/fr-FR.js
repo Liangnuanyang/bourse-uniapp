@@ -230,4 +230,8 @@ export default {
 	'password.xgzfmm': 'Modifier le mot de passe de paiement',
 	'detail.ssz': 'En maintenance',
 	'detail.kssj': 'Temps d’ouverture',
+	'zjlx': 'Sélectionner le type de pièce d\'identité',
+	'sfz': 'Carte d\'identité',
+	'huzhao': 'Passeport',
+	'jiashizheng': 'Permis de conduire'
 }

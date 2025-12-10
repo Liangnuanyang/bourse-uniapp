@@ -34,11 +34,11 @@
 			<view class="normal">
 				<view class="flex flex-column">
 					<view class="text-xs">
-						{{$t('user.zzc')}}(CNY)
+						{{$t('user.zzc')}}
 					</view>
 					<view class="pice">
-						<text class="unit">￥</text>
-						{{userInfo.money}}
+						<text class="unit">$</text>
+						{{userInfo.usdt_money}}
 					</view>
 					<view class="mt-sm">
 						<text>≈</text>
@@ -67,16 +67,16 @@
 					</view>
 				</view>
 				<view class="tui-position">
-					<image src="../../static/cny.png" mode=""></image>
+					<!-- <image src="../../static/cny.png" mode=""></image> -->
 				</view>
 			</view>
 			<view class="tui-spendMoney">
 				<view class="tui-spendMoneyItem">
 					<view class="cny">
-						{{$t('user.kyye')}}(CNY)
+						{{$t('user.kyye')}}
 					</view>
 					<view class="pice">
-						￥{{userInfo.money}}
+						${{userInfo.usdt_money}}
 					</view>
 				</view>
 				<view class="tui-rightItem" @click="getUserIndex">
@@ -378,6 +378,7 @@
 	.all-size {
 		font-size: 20rpx;
 		color: #a8a9ac;
+		text-align: center;
 	}
 
 	.big-size {
@@ -424,8 +425,8 @@
 			}
 
 			.pice {
-				font-size: 36rpx;
-				font-weight: 500;
+				font-size: 30rpx;
+				font-weight: 550;
 				padding-top: 20rpx;
 			}
 

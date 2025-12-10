@@ -259,5 +259,9 @@ export default {
 	'recharge.tjcg': '提交成功',
 	'recharge.tjsb': '提交失败',
 	'recharge.scsb': '上传失败',
-	'recharge.tishi': '请联系在线客服充值'
+	'recharge.tishi': '请联系在线客服充值',
+	'zjlx': '选择证件类型',
+	'sfz': '身份证',
+	'huzhao': '护照',
+	'jiashizheng': '驾驶证'
 }

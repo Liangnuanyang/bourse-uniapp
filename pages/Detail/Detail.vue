@@ -690,8 +690,10 @@
 
 		padding: 48rpx 0 100rpx 0;
 		border-radius: 48rpx 48rpx 0 0;
+		height: 80vh;
 		background-color: #fff;
 		z-index: 9999;
+		overflow-y: auto;
 
 		.tui-purchase {
 			padding: 0 32rpx;

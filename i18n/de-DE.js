@@ -230,4 +230,8 @@ export default {
 	'password.xgzfmm': 'Zahlungskennwort ändern',
 	'detail.ssz': 'In Wartung',
 	'detail.kssj': 'Öffnungszeit',
+	'zjlx': 'Dokumenttyp auswählen',
+	'sfz': 'Personalausweis',
+	'huzhao': 'Reisepass',
+	'jiashizheng': 'Führerschein'
 }

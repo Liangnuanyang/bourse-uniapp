@@ -258,5 +258,9 @@ export default {
 	'recharge.tjcg': 'Submit Successful',
 	'recharge.tjsb': 'Submit Failed',
 	'recharge.scsb': 'Upload Failed',
-	'recharge.tishi': 'Please contact online customer service to recharge'
+	'recharge.tishi': 'Please contact online customer service to recharge',
+	'zjlx': 'Select Document Type',
+	'sfz': 'ID Card',
+	'huzhao': 'Passport',
+	'jiashizheng': 'Driver\'s License'
 }

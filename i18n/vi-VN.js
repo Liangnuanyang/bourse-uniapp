@@ -230,4 +230,8 @@ export default {
 	'password.xgzfmm': 'Thay đổi mật khẩu thanh toán',
 	'detail.ssz': 'Bảo trì',
 	'detail.kssj': 'Giờ mở cửa',
+	'zjlx': 'Chọn loại giấy tờ',
+	'sfz': 'Thẻ căn cước',
+	'huzhao': 'Hộ chiếu',
+	'jiashizheng': 'Bằng lái xe'
 }

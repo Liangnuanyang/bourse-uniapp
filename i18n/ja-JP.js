@@ -230,4 +230,8 @@ export default {
 	'password.xgzfmm': '支払いパスワードを変更',
 	'detail.ssz': 'メンテナンス中',
 	'detail.kssj': 'オープン時間',
+	'zjlx': '証明書タイプを選択',
+	'sfz': '身分証明書',
+	'huzhao': 'パスポート',
+	'jiashizheng': '運転免許証'
 }
