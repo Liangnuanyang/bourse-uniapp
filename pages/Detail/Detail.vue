@@ -163,12 +163,12 @@
 					<view class="tui-inputBox">
 						<input class="tui-input" v-model="deal.actAmount" :placeholder="$t('detail.srje')"
 							type="text" />
-						<text>CNY</text>
+						<text>USD</text>
 					</view>
 					<view class="flex flex-between flex-item" style="margin-top: 16rpx;">
 						<view class="flex flex-item">
 							<view class="tui-money">
-								{{$t('detail.ye')}}：<text>{{userInfo.money}}</text> <text class="tui-cny">CNY</text>
+								{{$t('detail.ye')}}：<text>{{userInfo.money}}</text> <text class="tui-cny">USD</text>
 							</view>
 						</view>
 						<view class="tui-alling" @click="deal.actAmount = userInfo.money">

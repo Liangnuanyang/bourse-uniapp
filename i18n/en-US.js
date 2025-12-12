@@ -262,5 +262,6 @@ export default {
 	'zjlx': 'Select Document Type',
 	'sfz': 'ID Card',
 	'huzhao': 'Passport',
-	'jiashizheng': 'Driver\'s License'
+	'jiashizheng': 'Driver\'s License',
+	'yinsi': 'Privacy Policy'
 }

@@ -263,5 +263,6 @@ export default {
 	'zjlx': '选择证件类型',
 	'sfz': '身份证',
 	'huzhao': '护照',
-	'jiashizheng': '驾驶证'
+	'jiashizheng': '驾驶证',
+	'yinsi': '隐私政策'
 }

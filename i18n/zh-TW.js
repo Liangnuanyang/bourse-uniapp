@@ -234,6 +234,6 @@ export default {
 	'zjlx': '選擇證件類型',
 	'sfz': '身份證',
 	'huzhao': '護照',
-	'jiashizheng': '駕駛證'
-	
+	'jiashizheng': '駕駛證',
+	'yinsi': '隐私政策'
 }
