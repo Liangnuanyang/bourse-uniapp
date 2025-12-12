@@ -1,13 +1,13 @@
 var Fly = require("flyio/dist/npm/wx")
 import store from "@/store"
 import utils from '@/utils/util'
+
 var fly = new Fly;
 fly.config.baseURL = utils.getQueryUrl()
 
 // 添加请求拦截器
 fly.interceptors.request.use((request) => {
 	const token = store.state.token;
-	console.log('----request------',request)
 	if (!request.body['checkFree'] && !token) {
 		console.log('跳转登录', utils.getUrl())
 		//需要登录才能请求,未登录
@@ -24,8 +24,10 @@ fly.interceptors.request.use((request) => {
 	//最后删除标记
 	delete request.body['checkFree']
 	if (!request.body['hideLoading']) {
+		// 动态导入 i18n 并获取翻译文本
+		const i18n = require('@/i18n').default;
 		uni.showLoading({
-			title: "加载中"
+			title: i18n.t('loading')
 		})
 	} else {
 		delete request.body['hideLoading']

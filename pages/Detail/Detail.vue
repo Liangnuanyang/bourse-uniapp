@@ -61,7 +61,8 @@
 					:tabs="timeTabs.map(item=>item.text)" color="rgb(168, 169, 172)" activeColor="#222" bold
 					lineColor="#1150c2" :lineScale="0.2" bgColor="#f6f7fb" :zIndex="1"></v-tabs>
 			</view>
-			<kline ref="kline" :data="klineList"></kline>
+			<!-- <kline ref="kline" :data="klineList"></kline> -->
+			<KlineChart :klineData="klineList" style="height: 500px;"></KlineChart>
 			<view class="tui-btn">
 				<button class="btn" :style="{background:getUserItem.b_is == 1 ? 'rgba(241,243,246)' : '#f33b50'}"
 					@click="dealPopupOpen(1)">{{$t('detail.sg')}}</button>
@@ -295,11 +296,12 @@
 	import {
 		orderCount
 	} from "@/api/order.js"
+	import KlineChart from '@/components/KlineChart.vue'
 	export default {
 		components: {
 			kline: () => import("@/components/kline/index.vue"),
 			tabbar: () => import("@/components/tabbar.vue"),
-
+			KlineChart
 		},
 		data() {
 			return {
@@ -533,9 +535,9 @@
 
 					this.klineList = data || [];
 					console.log('----------', this.klineList)
-					this.$nextTick(_ => {
-						this.$refs['kline'].init()
-					})
+					// this.$nextTick(_ => {
+					// 	this.$refs['kline'].init()
+					// })
 				});
 			},
 			getGoods() {

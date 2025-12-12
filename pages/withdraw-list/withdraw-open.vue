@@ -14,8 +14,8 @@
 				</view>
 				<view class="tui-right">
 					<view class="message"
-						:style="{color:item.status == 1 ? '#25BC73' : item.status == 2 ? '#222' : '#f33b50'}">
-						{{item.status == 1 ? $t('withdraw-list.cg') : item.status == 2 ? $t('withdraw-list.shz') : $t('withdraw-list.sb')}}
+						:style="{color:item.status == 1 ? '#25BC73' : item.status == 2 ? '#222' : 'rgb(230 162 37)'}">
+						{{item.status == 1 ? $t('withdraw-list.cg') : item.status == 2 ? $t('withdraw-list.sb')  : $t('withdraw-list.shz')}}
 					</view>
 					<view class="time">
 						{{item.time}}

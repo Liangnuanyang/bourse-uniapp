@@ -263,5 +263,6 @@ export default {
 	'sfz': 'ID Card',
 	'huzhao': 'Passport',
 	'jiashizheng': 'Driver\'s License',
-	'yinsi': 'Privacy Policy'
+	'yinsi': 'Privacy Policy',
+	'loading': 'loading'
 }

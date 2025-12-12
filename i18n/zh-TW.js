@@ -235,5 +235,6 @@ export default {
 	'sfz': '身份證',
 	'huzhao': '護照',
 	'jiashizheng': '駕駛證',
-	'yinsi': '隐私政策'
+	'yinsi': '隐私政策',
+	'loading': '加载中'
 }
