@@ -210,6 +210,8 @@
 						uni.showModal({
 							title: this.$t("user.tcdl"),
 							content: this.$t("user.qdtc"),
+							confirmText: this.$t('app.qd'),
+							cancelText: this.$t('app.qx'),
 							confirmColor: '#222',
 							cancelColor: '#222',
 							success: function(res) {

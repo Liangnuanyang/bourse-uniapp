@@ -143,6 +143,8 @@
 					uni.showModal({
 						title: this.$t('login.zccg'),
 						content: this.$t('login.zccgts'),
+						confirmText: this.$t('app.qd'),
+						cancelText: this.$t('app.qx'),
 						showCancel: false,
 
 					}).then(_ => {

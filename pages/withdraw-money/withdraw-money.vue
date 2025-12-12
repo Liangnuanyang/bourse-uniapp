@@ -307,6 +307,8 @@
 					uni.showModal({
 						title: this.$t('withdraw-money.czcg'),
 						content: this.$t('withdraw-money.nxdd'),
+						confirmText: this.$t('app.qd'),
+						cancelText: this.$t('app.qx'),
 						showCancel: false,
 					}).then(_ => {
 						uni.navigateBack()

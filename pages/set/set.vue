@@ -96,6 +96,8 @@
 				uni.showModal({
 					title: this.$t('set.ts'),
 					content: this.$t('set.qchcdl'),
+					confirmText: this.$t('app.qd'),
+					cancelText: this.$t('app.qx'),
 				}).then(res => {
 					if (res.confirm) {
 						this.clearAllCache()
